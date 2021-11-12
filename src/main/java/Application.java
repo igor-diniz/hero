@@ -9,19 +9,7 @@ import java.io.IOException;
 
 public class Application {
     public static void main(String[] args) throws IOException {
-        Terminal terminal = new DefaultTerminalFactory().createTerminal();
-        Screen screen = new TerminalScreen(terminal);
-
-        screen.setCursorPosition(null);
-        screen.startScreen();
-        screen.doResizeIfNecessary();
-
-        TerminalSize terminalSize = new TerminalSize(40,20);
-        DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
-        terminal = terminalFactory.createTerminal();
-
-        screen.clear();
-        screen.setCharacter(10,10, TextCharacter.DEFAULT_CHARACTER);
-        screen.refresh();
+        Game game = new Game();
+        game.run();
     }
 }
