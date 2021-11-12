@@ -67,7 +67,7 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\hero-1.0-SNAPSHOT.jar;%APP_HOME%\lib\lanterna-3.2.0-alpha1.jar
+set CLASSPATH=%APP_HOME%\lib\hero-1.0-SNAPSHOT.jar;%APP_HOME%\lib\lanterna-3.1.1.jar
 
 
 @rem Execute hero
