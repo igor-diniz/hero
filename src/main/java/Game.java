@@ -11,11 +11,14 @@ import java.security.Key;
 
 public class Game {
     Screen screen;
-    private int x = 10;
-    private int y = 10;
 
-    public Game() throws IOException {
-        Terminal terminal = new DefaultTerminalFactory().createTerminal();
+    Hero hero = new Hero(10,10);
+
+    public Game(int width, int height) throws IOException {
+
+        TerminalSize terminalSize = new TerminalSize(width, height);
+        DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
+        Terminal terminal = terminalFactory.createTerminal();
         screen = new TerminalScreen(terminal);
         screen.setCursorPosition(null);
         screen.startScreen();
@@ -25,7 +28,7 @@ public class Game {
     private void draw() throws IOException {
 
         screen.clear();
-        screen.setCharacter(x, y, TextCharacter.fromCharacter('X')[0]);
+        hero.draw(screen);
         screen.refresh();
     }
 
@@ -41,17 +44,17 @@ public class Game {
         }
     }
     private void processKey(KeyStroke key) throws IOException {
-        if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q')
+        if (key.getKeyType() == KeyType.Character && (key.getCharacter() == 'q' || key.getCharacter() == 'Q'))
         {
             screen.close();
         }
 
         String keyT = key.getKeyType().toString();
         switch (keyT){
-            case "ArrowUp": y-=1; break;
-            case "ArrowDown": y+=1; break;
-            case "ArrowLeft": x-=1; break;
-            case "ArrowRight": x+=1; break;
+            case "ArrowUp": hero.moveUp(); break;
+            case "ArrowDown": hero.moveDown(); break;
+            case "ArrowLeft": hero.moveLeft(); break;
+            case "ArrowRight": hero.moveRight(); break;
         }
         System.out.println(key);
     }
