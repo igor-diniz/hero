@@ -10,9 +10,10 @@ import java.io.IOException;
 import java.security.Key;
 
 public class Game {
-    Screen screen;
+    private Screen screen;
+    private Hero hero = new Hero(new Position(10,10));
 
-    Hero hero = new Hero(10,10);
+    private void moveHero(Position position) { hero.setPosition(position); }
 
     public Game(int width, int height) throws IOException {
 
@@ -51,11 +52,12 @@ public class Game {
 
         String keyT = key.getKeyType().toString();
         switch (keyT){
-            case "ArrowUp": hero.moveUp(); break;
-            case "ArrowDown": hero.moveDown(); break;
-            case "ArrowLeft": hero.moveLeft(); break;
-            case "ArrowRight": hero.moveRight(); break;
+            case "ArrowUp": moveHero(hero.moveUp()); break;
+            case "ArrowDown": moveHero(hero.moveDown()); break;
+            case "ArrowLeft": moveHero(hero.moveLeft()); break;
+            case "ArrowRight": moveHero(hero.moveRight()); break;
         }
         System.out.println(key);
     }
+
 }
