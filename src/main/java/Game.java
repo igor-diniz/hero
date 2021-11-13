@@ -11,9 +11,7 @@ import java.security.Key;
 
 public class Game {
     private Screen screen;
-    private Hero hero = new Hero(new Position(10,10));
-
-    private void moveHero(Position position) { hero.setPosition(position); }
+    private Arena arena = new Arena(35,10);
 
     public Game(int width, int height) throws IOException {
 
@@ -29,7 +27,7 @@ public class Game {
     private void draw() throws IOException {
 
         screen.clear();
-        hero.draw(screen);
+        arena.draw(screen);
         screen.refresh();
     }
 
@@ -37,6 +35,10 @@ public class Game {
         while (true) {
             draw();
             KeyStroke key = screen.readInput();
+            if (key.getKeyType() == KeyType.Character && (key.getCharacter() == 'q' || key.getCharacter() == 'Q'))
+            {
+                screen.close();
+            }
             if (key.getKeyType() == KeyType.EOF)
             {
                 break;
@@ -44,20 +46,8 @@ public class Game {
             processKey(key);
         }
     }
-    private void processKey(KeyStroke key) throws IOException {
-        if (key.getKeyType() == KeyType.Character && (key.getCharacter() == 'q' || key.getCharacter() == 'Q'))
-        {
-            screen.close();
-        }
-
-        String keyT = key.getKeyType().toString();
-        switch (keyT){
-            case "ArrowUp": moveHero(hero.moveUp()); break;
-            case "ArrowDown": moveHero(hero.moveDown()); break;
-            case "ArrowLeft": moveHero(hero.moveLeft()); break;
-            case "ArrowRight": moveHero(hero.moveRight()); break;
-        }
-        System.out.println(key);
+    private void processKey(KeyStroke key){
+        arena.processKey(key);
     }
 
 }
