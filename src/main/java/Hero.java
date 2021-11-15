@@ -4,20 +4,10 @@ import com.googlecode.lanterna.graphics.TextGraphics;
 import org.w3c.dom.Text;
 
 
-public class Hero {
+public class Hero extends Element{
 
-    private Position position;
-
-    public Hero(Position position){
-        this.position = position;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
+    public Hero(int x, int y){
+        super(x,y);
     }
 
     public Position moveUp() {
