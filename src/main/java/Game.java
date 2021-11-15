@@ -44,6 +44,7 @@ public class Game {
             {
                 screen.close();
             }
+
             if (key.getKeyType() == KeyType.EOF)
             {
                 break;

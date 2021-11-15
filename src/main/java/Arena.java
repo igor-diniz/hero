@@ -9,11 +9,13 @@ import com.googlecode.lanterna.screen.Screen;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Arena {
     private int width, height;
     private Hero hero = new Hero(10,10);
     private List<Wall> walls;
+    private List<Coin> coins;
 
     private List<Wall> createWalls(){
         List<Wall> walls = new ArrayList<>();
@@ -31,10 +33,29 @@ public class Arena {
         return walls;
     }
 
+    private List<Coin> createCoins() {
+        Random random = new Random();
+        ArrayList<Coin> coins = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            int x = random.nextInt(width - 2) + 1;
+            int y = random.nextInt(height - 2) + 1;
+
+            if(hero.getPosition().equals(new Position(x,y)))
+            {
+                i--;
+                continue;
+            }
+            Coin coin = new Coin(x, y);
+            coins.add(coin);
+        }
+        return coins;
+    }
+
     public Arena(int width, int height){
         this.height =  height;
         this.width = width;
         this.walls = createWalls();
+        this.coins = createCoins();
     }
 
     private boolean canHeroMove(Position position) {
@@ -59,6 +80,17 @@ public class Arena {
         }
     }
 
+    private void retrieveCoins(){
+        for (Coin coin : coins)
+        {
+            if(coin.getPosition().equals(hero.getPosition()))
+            {
+                coins.remove(coin);
+                break;
+            }
+        }
+    }
+
 
     public void processKey(KeyStroke key) {
 
@@ -69,6 +101,7 @@ public class Arena {
             case "ArrowLeft": moveHero(hero.moveLeft()); break;
             case "ArrowRight": moveHero(hero.moveRight()); break;
         }
+        retrieveCoins();
         System.out.println(key);
     }
 
@@ -78,6 +111,11 @@ public class Arena {
         for (Wall wall : walls)
         {
             wall.draw(graphics);
+        }
+
+        for (Coin coin : coins)
+        {
+            coin.draw(graphics);
         }
         hero.draw(graphics);
     }
