@@ -49,11 +49,8 @@ public class Game {
             {
                 break;
             }
-            processKey(key);
+
+            arena.processKey(key);
         }
     }
-    private void processKey(KeyStroke key){
-        arena.processKey(key);
-    }
-
 }
